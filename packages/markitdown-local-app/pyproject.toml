@@ -1,0 +1,62 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "markitdown-local-app"
+dynamic = ["version"]
+description = "Local portable Streamlit app for converting local files to Markdown with MarkItDown."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+  { name = "Adam Fourney", email = "adamfo@microsoft.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+  "streamlit>=1.36",
+  "markitdown[docx,pdf,pptx,xls,xlsx]>=0.1.1,<0.2.0",
+]
+
+[project.urls]
+Documentation = "https://github.com/microsoft/markitdown#readme"
+Issues = "https://github.com/microsoft/markitdown/issues"
+Source = "https://github.com/microsoft/markitdown"
+
+[tool.hatch.version]
+path = "src/markitdown_local_app/__about__.py"
+
+[project.scripts]
+markitdown-local-app = "markitdown_local_app.__main__:main"
+
+[tool.hatch.envs.default]
+extra-dependencies = [
+  "pytest",
+]
+
+[tool.hatch.envs.hatch-test]
+extra-dependencies = [
+  "pytest",
+]
+
+[tool.coverage.run]
+source_pkgs = ["markitdown_local_app", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/markitdown_local_app/__about__.py",
+]
+
+[tool.coverage.paths]
+markitdown_local_app = ["src/markitdown_local_app", "*/markitdown-local-app/src/markitdown_local_app"]
+tests = ["tests", "*/markitdown-local-app/tests"]
+
+[tool.hatch.build.targets.sdist]
+only-include = ["src/markitdown_local_app"]

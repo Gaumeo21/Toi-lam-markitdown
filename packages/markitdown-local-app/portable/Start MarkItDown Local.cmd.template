@@ -1,0 +1,20 @@
+@echo off
+setlocal
+set "APP_DIR=%~dp0"
+set "PYTHON=%APP_DIR%runtime\python\python.exe"
+set "PYTHONPATH=%APP_DIR%site-packages;%APP_DIR%app"
+set "STREAMLIT_BROWSER_GATHER_USAGE_STATS=false"
+
+if not exist "%PYTHON%" (
+  echo Portable Python runtime was not found at "%PYTHON%".
+  echo Re-download the complete portable ZIP and extract it again.
+  pause
+  exit /b 1
+)
+
+"%PYTHON%" -m streamlit run "%APP_DIR%app\markitdown_local_app\app.py" --server.headless false
+if errorlevel 1 (
+  echo.
+  echo MarkItDown Local Portable exited with an error.
+)
+pause
